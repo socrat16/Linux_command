@@ -88,8 +88,28 @@ vmstat / free
 
 git: git blame, git diff, git status, git pull, git add, git commit, git push (полезно будет, мы юзаем)
 
-ping, traceroute, mtr, ip r, ip a, iftop
+ping - отправка ICMP пакетов на хост
 
+traceroute
+утилита для проверки проходжения пакетов через роутеря к конечному хосту
+оманда traceroute linux использует UDP пакеты. Она отправляет пакет с TTL=1 и смотрит адрес ответившего узла, дальше TTL=2, TTL=3 и так пока не достигнет цели. Каждый раз отправляется по три пакета и для каждого из них измеряется время прохождения.
+root@dgm:~# traceroute -I sbercloud.ru (-I, --icmp Use ICMP ECHO for probes)
+traceroute to sbercloud.ru (178.248.232.192), 30 hops max, 60 byte packets
+ 1  node193-msk1.cloudvps.reg.ru (37.140.193.6)  0.383 ms  0.348 ms  0.341 ms
+ 2  kiae-r1.hosting.reg.ru (31.31.194.4)  0.411 ms  0.406 ms  0.400 ms
+ 3  * * *
+ 4  150-192-212-88.host.exepto.ru (88.212.192.150)  0.390 ms  0.411 ms  4.449 ms
+ 5  mskn17.mskn202.transtelecom.net (188.43.19.222)  4.442 ms  4.435 ms  4.428 ms
+ 6  10.99.99.9 (10.99.99.9)  4.421 ms  1.127 ms  1.522 ms
+ 7  HLL-gw.transtelecom.net (188.43.15.237)  0.918 ms  0.912 ms  0.900 ms
+ 8  178.248.232.192 (178.248.232.192)  0.861 ms  0.856 ms  0.880 ms
+root@dgm:~#
+
+
+
+mtr, ip r, ip a, iftop
+
+ip a - отображение сетевых интерфейсов с данными.
 
 ss - какие сетевые подключения Linux открыты, какие IP адреса используются или какие порты прослушиваются.  ss -t - только TCP
 netstat -tulpn
