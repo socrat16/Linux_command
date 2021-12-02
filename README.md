@@ -74,7 +74,50 @@ vmstat / free
 git: git blame, git diff, git status, git pull, git add, git commit, git push (полезно будет, мы юзаем)
 ping, traceroute, mtr, ip r, ip a, iftop
 netstat, ss
-telnet, netcat, netcat -u
+
+
+telnet уд. упр. компом , старый в основном ссх сейчас, для проверки портов(на упрвлемой тачке долн быь telnet-server)
+root@dgm:~# telnet opennet.ru 80
+Trying 217.65.3.21...
+Connected to opennet.ru.
+Escape character is '^]'.
+^] (нажать ctrl+[)
+telnet>
+GET /
+<HTML>
+
+ 
+ 
+netcat netcat -u подключения оболочки к порту, установления соединений TCP/UDP
+nc [options] host port -u - сканировать порты UDP 
+nc: connect to 194.67.91.196 port 440 (tcp) failed: Connection refused
+root@dgm:~# nc -zvn  lol.ru   21 25 80 440
+nc: getaddrinfo for host "lol.ru" port 21: Name or service not known
+root@dgm:~# nc -zv  lol.ru   21 25 80 440
+nc: connect to lol.ru port 21 (tcp) failed: Connection refused
+Connection to lol.ru 25 port [tcp/smtp] succeeded!
+Connection to lol.ru 80 port [tcp/http] succeeded!
+nc: connect to lol.ru port 440 (tcp) failed: Connection refused
+root@dgm:~#
+root@dgm:~# nc -C hackware.ru 80
+GET / HTTP/1.0
+Host: hackware.ru
+HTTP/1.1 302 Found
+Server: nginx
+Date: Thu, 02 Dec 2021 12:42:42 GMT
+Content-Type: text/html; charset=iso-8859-1
+Content-Length: 204
+Connection: close
+Location: https://hackware.ru/
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<html><head>
+<title>302 Found</title>
+</head><body>
+<h1>Found</h1>
+<p>The document has moved <a href="https://hackware.ru/">here</a>.</p>
+</body></html>
+root@dgm:~#
+https://routerus.com/netcat-nc-command-with-examples/
 
 
 curl, wget -  работа с URL страницами. для конектов к серву по разным протоколам с синтткс  урл. wget -b -o ~/wget.log http://ftp.gnu.org/gnu/wget/wget-1.5.3.tar.gz  -
