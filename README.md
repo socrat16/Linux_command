@@ -57,24 +57,45 @@ rsync (хотя бы привести две директории к одном�
 scp
 vim / vimtutor – банально файл открывать/закрывать надо уметь
 ps uaxwf (что каждая опция значит)
-pstree
-sort, uniq
-diff
-stat (что такое Access, Modify, Change?)
-pgrep / pkill
-dig
-lsof
-strace
-crontab
-date
-touch (что конкретно делает?)
-mount
-iostat / iotop /
-vmstat / free
-git: git blame, git diff, git status, git pull, git add, git commit, git push (полезно будет, мы юзаем)
-ping, traceroute, mtr, ip r, ip a, iftop
-netstat, ss
 
+pstree
+
+sort, uniq
+
+diff
+
+stat (что такое Access, Modify, Change?)
+
+pgrep / pkill
+
+dig
+
+lsof
+
+strace
+
+crontab
+
+date
+
+touch (что конкретно делает?)
+
+mount
+
+iostat / iotop /
+
+vmstat / free
+
+git: git blame, git diff, git status, git pull, git add, git commit, git push (полезно будет, мы юзаем)
+
+ping, traceroute, mtr, ip r, ip a, iftop
+
+
+ss - какие сетевые подключения Linux открыты, какие IP адреса используются или какие порты прослушиваются.  ss -t - только TCP
+netstat -tulpn
+открытые порты
+Отображение сервис айпи -порт -
+порт принимает вх пакеты из инета
 
 telnet уд. упр. компом , старый в основном ссх сейчас, для проверки портов(на упрвлемой тачке долн быь telnet-server)
 root@dgm:~# telnet opennet.ru 80
