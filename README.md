@@ -199,13 +199,13 @@ ps -eo pid,ppid,cmd,%mem,%cpu --sort=-%cpu | head
 `uniq` предназначена для поиска одинаковых строк в массивах текста.  
 
 ```
-naagapov@test:~$ diff -y lol1 lol3  
+na@test:~$ diff -y lol1 lol3  
 2                                                               2  
 2                                                               2  
 2                                                             | 3  
 2                                                             | 3  
                                                               > 5  
-naagapov@test:~$
+nav@test:~$
 ``` 
 построчное сравнение содержимого файлов . 2,3c2,4 - 2 и 3 стоки были изменены в 1 файле.
 
