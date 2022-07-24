@@ -48,7 +48,7 @@ root@dgm:~#
 https://rtfm.co.ua/unix-df-i-du-raznye-znacheniya/  
 
 
-`logrotate` - для автоматизации обработки журнало, кнфг - /etc/logrotate.conf  
+`logrotate` - для автоматизации обработки журналов, кнфг - /etc/logrotate.conf  
 https://losst.ru/nastrojka-logrotate  
 https://max-ko.ru/33-logi-v-linux-1.html  
  
