@@ -328,6 +328,7 @@ rebase  - команда копирует комиты(изменения фай
 4- `git merge b1` делаем Fast-forward  
 Cоздать репу через кли https://cli.github.com/manual/gh_repo_create#:~:text=Create%20a%20new%20GitHub%20repository,--private%20%2C%20or%20--internal%20  
 https://askdev.ru/q/chto-oznachaet-fetch-head-in-git-10965/  
+`$ ssh -i id_rsa | git clone git@git.**e.git` - скачать репу, с готовым ключем.
 
 
 `ping` - отправка ICMP пакетов на хост  
