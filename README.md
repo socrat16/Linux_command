@@ -62,7 +62,10 @@ Created|symlink
 Created|symlink
 root@dgm:~#
 ```
-
+Права:
+`$ sudo adduser ubuntuserver и $ sudo adduser ubuntuserver sudo првоерить входит ли в гурппу су sudo -l -U ubuntuserver` - создать юзера и предоставить права на судо
+`sudo deluser ubuntuserver sudo` - удалить  судо
+`$ sudo deluser ubuntuserver` - удалть узера
 `wc` - кол-во строк в обекте  
 ```
 root@dgm:~# wc -l qqq.py
