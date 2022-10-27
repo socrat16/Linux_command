@@ -25,7 +25,8 @@ test@mail.rugfhgfhgfhfg
   
 `dig` - DNS (ttl на днс лучше выставлять менее 600 с. чтобы обновляись записи быстрее, но общее время зависит кнч от внешних днсов)
 `$ sudo tail -f cat  /var/log/nginx/access.log  | grep -Po '^\d{1,3}\.\d{1,3}.\d{1,3}.\d{1,3} '` - вывод последних ip в реальном времени  
-`$ $ cat rrr | grep.exe  -Po "getTurnir\(\'match\',\'\d{1}\'\,\'\d{1,8}\',\'\d{1,2}\',\'\'\)"
+`$ cat vprg/bas.txt | grep.exe  -Po "getTurnir\(\'match\',\'\d{1}\'\,\'\d{1,8}\',\'\d{1,2}\',\'\'\)" > vprg/basend.txt
+
 ` vp, сперва 
 ![image](https://user-images.githubusercontent.com/71122445/198233196-d5404435-cdbe-4df9-b442-348573a36d5c.png)
 
