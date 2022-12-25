@@ -72,6 +72,8 @@ root@dgm:~#
 `$ sudo deluser ubuntuserver` - удалть узера
 `wc` - кол-во строк в обекте  
 ```
+`$ grep . -rnw -e 'This is your first post'` Поиск текста внутри файла
+
 root@dgm:~# wc -l qqq.py
 95 qqq.py
 root@dgm:~#
