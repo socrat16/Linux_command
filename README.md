@@ -1,4 +1,8 @@
-
+Работа с Сетью  
+`dig` - DNS (ttl на днс лучше выставлять менее 600 с. чтобы обновляись записи быстрее, но общее время зависит кнч от внешних днсов)
+Работа с Дисками  
+Работа С Git  
+Работа с Файлами 
 `grep `-  поиск в файле, поиска строк(подстрок(посл-сть символов в строке)), соответствующих строке в тексте или содержимому файлов. regexp задает шаблон для поиска текста.Они регистрзависмы.  
 Пример:  
 1- точное совпадение встроено    
@@ -23,12 +27,28 @@ test@mail.rugfhgfhgfhfg
 `grep -P -n '^.{120,200}$' tt ` - ищим стороки в диапазоне кол-ва символов и потом ищем  
 `wc -L` - максимальное число символов в строке
   
-`dig` - DNS (ttl на днс лучше выставлять менее 600 с. чтобы обновляись записи быстрее, но общее время зависит кнч от внешних днсов)
+
 `$ sudo tail -f cat  /var/log/nginx/access.log  | grep -Po '^\d{1,3}\.\d{1,3}.\d{1,3}.\d{1,3} '` - вывод последних ip в реальном времени  
 `$ cat vprg/bas.txt | grep.exe  -Po "getTurnir\(\'match\',\'\d{1}\'\,\'\d{1,8}\',\'\d{1,2}\',\'\'\)" > vprg/basend.txt
 
 ` vp, сперва 
 ![image](https://user-images.githubusercontent.com/71122445/198233196-d5404435-cdbe-4df9-b442-348573a36d5c.png)
+
+`awk` - для обработки и фильтрации текста  
+```
+root@dgm:~# cat virt-sysprep-firstboot.log | grep  -P '^(\w){7} ' | awk '{print $1 "|" $2}'
+Scripts|dir:
+Removed|/etc/systemd/system/sshd.service.
+Removed|/etc/systemd/system/multi-user.target.wants/ssh.service.
+Created|symlink
+Created|symlink
+root@dgm:~#
+```
+
+</h3>Работа с Системой</h3>
+Работа с ПО
+Траблшутинг 
+
 
 `du` специально предназначена для просмотра размера файлов  место в папке. выполняет запрос непосредственно к каждому найденному файлу в разделе  
 ```
@@ -56,16 +76,7 @@ https://rtfm.co.ua/unix-df-i-du-raznye-znacheniya/
 https://losst.ru/nastrojka-logrotate  
 https://max-ko.ru/33-logi-v-linux-1.html  
  
-`awk` - для обработки и фильтрации текста  
-```
-root@dgm:~# cat virt-sysprep-firstboot.log | grep  -P '^(\w){7} ' | awk '{print $1 "|" $2}'
-Scripts|dir:
-Removed|/etc/systemd/system/sshd.service.
-Removed|/etc/systemd/system/multi-user.target.wants/ssh.service.
-Created|symlink
-Created|symlink
-root@dgm:~#
-```
+
 Права:
 `$ sudo adduser ubuntuserver и $ sudo adduser ubuntuserver sudo првоерить входит ли в гурппу су sudo -l -U ubuntuserver` - создать юзера и предоставить права на судо
 `sudo deluser ubuntuserver sudo` - удалить  судо
