@@ -292,6 +292,8 @@ root@dgm:~#
 ```
 <h2><b> Работа с ПО </b></h2>
 
+Пакеты - Исх коды - репозитории
+
 Ubuntu/Debian/Kali/Mint Linux:
 
 `apt-get install`     - скачать и установить программу
