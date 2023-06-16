@@ -22,6 +22,14 @@ root@dgm:~#
 `mtr -n sedicomm.com` аналог трейроута -n покажет ip маршрутирзаторов -b итотито
 
 `ip a` - отображение сетевых интерфейсов с данными.
+```
+$ ip r
+default via 10.128.0.1 dev eth0 proto dhcp src 10.128.0.21 metric 100
+10.128.0.0/24 dev eth0 proto kernel scope link src 10.128.0.21
+10.128.0.1 dev eth0 proto dhcp scope link src 10.128.0.21 metric 100
+172.17.0.0/16 dev docker0 proto kernel scope link src 172.17.0.1 linkdown
+```
+Пакет идет на шлюз 10.128.0.1 (его дал dhcp) если его нет в сети пакеты идут внутри сети.
 
 `ss` - какие сетевые подключения Linux открыты, какие IP адреса используются или какие порты прослушиваются.  `ss -t` - только TCP  
 
