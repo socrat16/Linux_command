@@ -161,7 +161,7 @@ Disk identifier: 8E70400A-DD3F-443D-95C1-844A5A72302B
 7 - $ mount /dev/vdb1 /opt/labadisk2/ подмонтировать его
 ```
 
-LVM:
+Создать LVM (Обьединять нескл. дисков в 1 пул адресов.):
 ```
 0) Создать в настройках VM 2 диска по 512 МБ
 [-@linux-lab ~]$ sudo fdisk -l
@@ -393,7 +393,112 @@ tmpfs                            187060       0    187060   0% /run/user/1003
 /dev/mapper/VG_demo-LV_demo_1   1034120   40256    993864   4% /opt/lab-disk
 
 ```
-Обьединять нескл. дисков в 1 пул адресов.
+Расширение корневой LVM:
+
+```
+Увеличить корневую ФС без  перезагрузки сервера
+
+
+0) Добавить диск в 512 MB
+
+1) Создать партицию
+Welcome to fdisk (util-linux 2.32.1).
+Changes will remain in memory only, until you decide to write them.
+Be careful before using the write command.
+
+Device does not contain a recognized partition table.
+Created a new DOS disklabel with disk identifier 0xc97e9841.
+
+Command (m for help): n
+Partition type
+   p   primary (0 primary, 0 extended, 4 free)
+   e   extended (container for logical partitions)
+Select (default p): p
+Partition number (1-4, default 1): 1
+First sector (2048-1048575, default 2048): 
+Last sector, +sectors or +size{K,M,G,T,P} (2048-1048575, default 1048575): 
+
+Created a new partition 1 of type 'Linux' and of size 511 MiB.
+
+Command (m for help): t
+Selected partition 1
+Hex code (type L to list all codes): 8e
+Changed type of partition 'Linux' to 'Linux LVM'.
+
+Command (m for help): w
+The partition table has been altered.
+Calling ioctl() to re-read partition table.
+Syncing disks.
+
+
+2) Создать pvextend
+[-@linux-lab ~]$ sudo pvcreate /dev/sdb1
+  Physical volume "/dev/sdb1" successfully created.
+
+
+3) Расширить root vg
+-@linux-lab ~]$ lvdisplay 
+  WARNING: Running as a non-root user. Functionality may be unavailable.
+  /run/lock/lvm/P_global:aux: open failed: Permission denied
+[-@linux-lab ~]$ sudo vgdisplay 
+  --- Volume group ---
+  VG Name               cl
+  System ID             
+  Format                lvm2
+  Metadata Areas        1
+  Metadata Sequence No  3
+  VG Access             read/write
+  VG Status             resizable
+  MAX LV                0
+  Cur LV                2
+  Open LV               2
+  Max PV                0
+  Cur PV                1
+  Act PV                1
+  VG Size               <31.00 GiB
+  PE Size               4.00 MiB
+  Total PE              7935
+  Alloc PE / Size       7935 / <31.00 GiB
+  Free  PE / Size       0 / 0   
+  VG UUID               uBFcgL-QHcf-Eovy-mqSd-N3z0-G8Aq-p0Gxzj
+   
+[-@linux-lab ~]$ sudo vgextend cl /dev/sdb1
+  Volume group "cl" successfully extended
+
+
+4) Расширить root lv
+[-@linux-lab ~]$ sudo lvextend -l +100%FREE /dev/cl/root
+  Size of logical volume cl/root changed from <28.93 GiB (7406 extents) to <29.43 GiB (7533 extents).
+  Logical volume cl/root successfully resized.
+
+
+5) расширить корневую файловую систему
+[-@linux-lab ~]$ sudo xfs_growfs /dev/cl/root 
+meta-data=/dev/mapper/cl-root    isize=512    agcount=4, agsize=1895936 blks
+         =                       sectsz=512   attr=2, projid32bit=1
+         =                       crc=1        finobt=1, sparse=1, rmapbt=0
+         =                       reflink=1
+data     =                       bsize=4096   blocks=7583744, imaxpct=25
+         =                       sunit=0      swidth=0 blks
+naming   =version 2              bsize=4096   ascii-ci=0, ftype=1
+log      =internal log           bsize=4096   blocks=3703, version=2
+         =                       sectsz=512   sunit=0 blks, lazy-count=1
+realtime =none                   extsz=4096   blocks=0, rtextents=0
+data blocks changed from 7583744 to 7713792
+
+[-@linux-lab ~]$ df 
+Filesystem          1K-blocks    Used Available Use% Mounted on
+devtmpfs               918616       0    918616   0% /dev
+tmpfs                  935308       0    935308   0% /dev/shm
+tmpfs                  935308    8808    926500   1% /run
+tmpfs                  935308       0    935308   0% /sys/fs/cgroup
+/dev/mapper/cl-root  30840356 2614960  28225396   9% /
+/dev/sda1              999320  188316    742192  21% /boot
+tmpfs                  187060       0    187060   0% /run/user/1003
+[-@linux-lab ~]$ 
+
+```
+
 
  
 PV - метка на партицию
