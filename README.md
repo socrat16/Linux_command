@@ -162,7 +162,237 @@ Disk identifier: 8E70400A-DD3F-443D-95C1-844A5A72302B
 ```
 
 LVM:
+```
+0) Создать в настройках VM 2 диска по 512 МБ
+[-@linux-lab ~]$ sudo fdisk -l
+[output ommited]
+Disk /dev/sdb: 512 MiB, 536870912 bytes, 1048576 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
 
+Disk /dev/sdc: 512 MiB, 536870912 bytes, 1048576 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+1) Создать по 1 партиции на каждом из дисков
+
+[-@linux-lab ~]$ sudo fdisk /dev/sdb 
+
+Welcome to fdisk (util-linux 2.32.1).
+Changes will remain in memory only, until you decide to write them.
+Be careful before using the write command.
+
+Device does not contain a recognized partition table.
+Created a new DOS disklabel with disk identifier 0x7259e965.
+
+Command (m for help): n
+Partition type
+   p   primary (0 primary, 0 extended, 4 free)
+   e   extended (container for logical partitions)
+Select (default p): p
+Partition number (1-4, default 1): 
+First sector (2048-1048575, default 2048): 
+Last sector, +sectors or +size{K,M,G,T,P} (2048-1048575, default 1048575): 
+
+Created a new partition 1 of type 'Linux' and of size 511 MiB.
+
+Command (m for help): t
+Selected partition 1
+Hex code (type L to list all codes): 8e
+Changed type of partition 'Linux' to 'Linux LVM'.
+
+Command (m for help): w
+The partition table has been altered.
+Calling ioctl() to re-read partition table.
+Syncing disks.
+
+[-@linux-lab ~]$ sudo fdisk /dev/sdc
+
+Welcome to fdisk (util-linux 2.32.1).
+Changes will remain in memory only, until you decide to write them.
+Be careful before using the write command.
+
+Device does not contain a recognized partition table.
+Created a new DOS disklabel with disk identifier 0x88d6f91f.
+
+Command (m for help): n
+Partition type
+   p   primary (0 primary, 0 extended, 4 free)
+   e   extended (container for logical partitions)
+Select (default p): p
+Partition number (1-4, default 1): 
+First sector (2048-1048575, default 2048): 
+Last sector, +sectors or +size{K,M,G,T,P} (2048-1048575, default 1048575): 
+
+Created a new partition 1 of type 'Linux' and of size 511 MiB.
+
+Command (m for help): t
+Selected partition 1
+Hex code (type L to list all codes): 8e
+Changed type of partition 'Linux' to 'Linux LVM'.
+
+Command (m for help): w
+The partition table has been altered.
+Calling ioctl() to re-read partition table.
+Syncing disks.
+
+[-@linux-lab ~]$ fdisk -l
+[output ommited]
+Disk /dev/sdb: 512 MiB, 536870912 bytes, 1048576 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: dos
+Disk identifier: 0x7259e965
+
+Device     Boot Start     End Sectors  Size Id Type
+/dev/sdb1        2048 1048575 1046528  511M 83 Linux LVM
+
+
+Disk /dev/sdc: 512 MiB, 536870912 bytes, 1048576 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: dos
+Disk identifier: 0x88d6f91f
+
+Device     Boot Start     End Sectors  Size Id Type
+/dev/sdc1        2048 1048575 1046528  511M 83 Linux LVM
+
+
+2) Cоздать physical volumes
+[-@linux-lab ~]$ sudo pvcreate /dev/sdb1 /dev/sdc1
+  Physical volume "/dev/sdb1" successfully created.
+  Physical volume "/dev/sdc1" successfully created.
+
+[-@linux-lab ~]$ sudo pvdisplay 
+  --- Physical volume ---
+  PV Name               /dev/sdb1
+  VG Name               VG_demo
+  PV Size               511.00 MiB / not usable 3.00 MiB
+  Allocatable           yes 
+  PE Size               4.00 MiB
+  Total PE              127
+  Free PE               127
+  Allocated PE          0
+  PV UUID               vK3cmu-oDNv-2qJy-pK7z-97eh-em4z-BDVjhN
+   
+  --- Physical volume ---
+  PV Name               /dev/sdc1
+  VG Name               VG_demo
+  PV Size               511.00 MiB / not usable 3.00 MiB
+  Allocatable           yes 
+  PE Size               4.00 MiB
+  Total PE              127
+  Free PE               127
+  Allocated PE          0
+  PV UUID               2BqgbA-Nbeq-30uK-zscg-RB6S-7Tn2-H7rvvQ
+
+3) Создать volume group VG_demo1 используя созданные pv
+[-@linux-lab ~]$ sudo vgcreate VG_demo /dev/sdb1 /dev/sdc1
+  Volume group "VG_demo" successfully created
+
+[-@linux-lab ~]$ sudo vgdisplay 
+  --- Volume group ---
+  VG Name               VG_demo
+  System ID             
+  Format                lvm2
+  Metadata Areas        2
+  Metadata Sequence No  1
+  VG Access             read/write
+  VG Status             resizable
+  MAX LV                0
+  Cur LV                0
+  Open LV               0
+  Max PV                0
+  Cur PV                2
+  Act PV                2
+  VG Size               1016.00 MiB
+  PE Size               4.00 MiB
+  Total PE              254
+  Alloc PE / Size       0 / 0   
+  Free  PE / Size       254 / 1016.00 MiB
+  VG UUID               l45eZt-O9SZ-77pn-36Az-7ktD-u1L6-1O7BkB
+
+
+4) Создать logical volume используя все доступное место vg
+[-@linux-lab ~]$ sudo lvcreate -l 100%FREE -n LV_demo_1 VG_demo
+  Logical volume "LV_demo_1" created.
+
+[-@linux-lab ~]$ sudo lvdisplay
+sudo lvdisplay 
+  --- Logical volume ---
+  LV Path                /dev/VG_demo/LV_demo_1
+  LV Name                LV_demo_1
+  VG Name                VG_demo
+  LV UUID                Oamnsc-Xfmo-VdNa-mgy9-oKtP-Y8Vw-PW5TYZ
+  LV Write Access        read/write
+  LV Creation host, time linux-lab, 2021-07-23 14:02:46 +0300
+  LV Status              available
+  # open                 0
+  LV Size                1016.00 MiB
+  Current LE             254
+  Segments               2
+  Allocation             inherit
+  Read ahead sectors     auto
+  - currently set to     8192
+  Block device           253:2
+[-@linux-lab ~]$ sudo vgdisplay 
+  --- Volume group ---
+  VG Name               VG_demo
+  System ID             
+  Format                lvm2
+  Metadata Areas        2
+  Metadata Sequence No  2
+  VG Access             read/write
+  VG Status             resizable
+  MAX LV                0
+  Cur LV                1
+  Open LV               0
+  Max PV                0
+  Cur PV                2
+  Act PV                2
+  VG Size               1016.00 MiB
+  PE Size               4.00 MiB
+  Total PE              254
+  Alloc PE / Size       254 / 1016.00 MiB
+  Free  PE / Size       0 / 0   
+  VG UUID               l45eZt-O9SZ-77pn-36Az-7ktD-u1L6-1O7BkB
+
+5) Отформатировать lv в xfs
+[-@linux-lab ~]$ sudo mkfs.xfs /dev/VG_demo/LV_demo_1 
+meta-data=/dev/mapper/VG_demo-LV_demo_1 isize=512    agcount=4, agsize=65024 blks
+         =                       sectsz=512   attr=2, projid32bit=1
+         =                       crc=1        finobt=1, sparse=1, rmapbt=0
+         =                       reflink=1
+data     =                       bsize=4096   blocks=260096, imaxpct=25
+         =                       sunit=0      swidth=0 blks
+naming   =version 2              bsize=4096   ascii-ci=0, ftype=1
+log      =internal log           bsize=4096   blocks=1566, version=2
+         =                       sectsz=512   sunit=0 blks, lazy-count=1
+realtime =none                   extsz=4096   blocks=0, rtextents=0
+
+6) Добавить информацию в /etc/fstab примонтировать lv
+[-@linux-lab ~]$ cat /etc/fstab 
+[output ommited]
+/dev/VG_demo/LV_demo_1	/opt/lab-disk		xfs	defaults	0 0
+
+[-@linux-lab ~]$ sudo mount -a
+
+[-@linux-lab ~]$ df
+Filesystem                    1K-blocks    Used Available Use% Mounted on
+devtmpfs                         918616       0    918616   0% /dev
+tmpfs                            935308       0    935308   0% /dev/shm
+tmpfs                            935308    8828    926480   1% /run
+tmpfs                            935308       0    935308   0% /sys/fs/cgroup
+/dev/mapper/cl-root            30320164 2406096  27914068   8% /
+/dev/sda1                        999320  188316    742192  21% /boot
+tmpfs                            187060       0    187060   0% /run/user/1003
+/dev/mapper/VG_demo-LV_demo_1   1034120   40256    993864   4% /opt/lab-disk
+
+```
 Обьединять нескл. дисков в 1 пул адресов.
 
  
