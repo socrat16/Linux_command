@@ -251,7 +251,22 @@ test@mail.rugfhgfhgfhfg
 `grep - c` - вывод кол-ва повтор строк -v исключить из поиска фразу. -i - учет регистра.  
 `grep -P -n '^.{120,200}$' tt ` - ищим стороки в диапазоне кол-ва символов и потом ищем  
 `wc -L` - максимальное число символов в строке
-  
+
+потоки STDIN 0, STDOUT 1 , STDERR 2
+
+`ls -l > fielname` stdout или 1>
+
+`ls -l ghgh 2> filename` stderr 
+
+`>>` -добавить инфо в конец файла, > перезапись
+
+`|` - stdout in stdin
+
+`ls -l | tee -a filename` - добавить в файл и вывести на экран -a дозапись
+
+`2>&1`  - указатель, STDERR туда же куда 1  
+
+
 
 `$ sudo tail -f cat  /var/log/nginx/access.log  | grep -Po '^\d{1,3}\.\d{1,3}.\d{1,3}.\d{1,3} '` - вывод последних ip в реальном времени  
 `$ cat vprg/bas.txt | grep.exe  -Po "getTurnir\(\'match\',\'\d{1}\'\,\'\d{1,8}\',\'\d{1,2}\',\'\'\)" > vprg/basend.txt
@@ -326,6 +341,12 @@ RedHat/CenOS Linux:
 `rpm –i `                 - установить программу из файла .rpm 
 
 `rpm –e`                 - удалить программу 
+
+`rpm -qa` - пак менеджер centos уст-ные пакеты в ОС
+
+`rpm -ql httpd` - список файлов из уст-ного пакета
+
+`yum searth httpd` - для работы с репозит (дает инфо в rmp) ищет в реп апач
 
 
 <h2><b> Траблшутинг  </b></h2>
