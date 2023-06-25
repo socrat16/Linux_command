@@ -499,7 +499,41 @@ tmpfs                  187060       0    187060   0% /run/user/1003
 
 ```
 
+```
+ОС распазнает ФС с помщью суперблока в после сектора в 1 партиции
 
+ pvs - посмотреь какие физтома в лвм есть
+ vgs - какие волюм группы
+ lvs - какие папки
+ 
+из физ в Vфиз:
+
+pvcrreate /dev/sdd1
+созд волгруппу
+vgcreate vg_test /dev/sdd1 
+созд партицию в vg_test
+lvcreate vp_test -n lv_01 -L 100M
+Только потом создаем ФС  (На лдогич томе)
+mkfs.ext4 /dev/vg_test/lv_01
+И монтируем
+mount /dev/vg_test/lv_01 /nmt/01
+
+
+Расширить туже волгруппу (иниц и добавленеи):
+vgextend vg_test /dev/sdd2 
+Добавить в партицию lv_01 места:
+lvextend /dev/mapper/vg_test/lv_01 -L +100M
+потом говорим что увеличили
+resize2fs /dev/mapper/vg_test/lv_01
+Одной командой + 100%
+lvextend /dev/mapper/vg_test/lv_01 -l +100%FREE -r
+Перенос данных:
+pvmove /dev/sdd1 /dev/sdd3
+Вытащит диск из состава vg_test:
+vgreduce vg_test /dev/sdd1
+Ваще убрать:
+pvremove /dev/sdd1
+```
  
 PV - метка на партицию
 
