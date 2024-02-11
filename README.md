@@ -1158,6 +1158,7 @@ root@194-67-91-196:/bin#
 
 `/lib`   `/bin и /sbin` обычно используют разделяемые библиотеки  
 
+![image](https://github.com/socrat16/Linux_command/assets/71122445/c9437ff4-5644-4f5c-8394-08c7bc5f0b91)
 
 ![image](https://github.com/socrat16/Linux_command/assets/71122445/f8dfce4a-8ceb-4599-9db6-310b7b6637b8)
 Каталоги
