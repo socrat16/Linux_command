@@ -15,8 +15,13 @@ traceroute to sbercloud.ru (178.248.232.192), 30 hops max, 60 byte packets
  6  10.99.99.9 (10.99.99.9)  4.421 ms  1.127 ms  1.522 ms
  7  HLL-gw.transtelecom.net (188.43.15.237)  0.918 ms  0.912 ms  0.900 ms
  8  178.248.232.192 (178.248.232.192)  0.861 ms  0.856 ms  0.880 ms
+
+
+![image](https://github.com/socrat16/Linux_command/assets/71122445/dc5fba25-abc7-4fe9-a19f-762c211f7e57)
+
 root@dgm:~#
 ```
+
 
 
 `mtr -n sedicomm.com` аналог трейроута -n покажет ip маршрутирзаторов -b итотито
