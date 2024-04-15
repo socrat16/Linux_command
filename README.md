@@ -816,6 +816,7 @@ https://max-ko.ru/33-logi-v-linux-1.html
 `sudo deluser ubuntuserver sudo` - удалить  судо  
 `$ sudo deluser ubuntuserver` - удалть узера  
 `chmod` опции права /путь/к/файлу  - редактор права https://losst.ru/komanda-chmod-linux   
+`chmod --reference=old`  new права
 `chmod g+x lol7` - даем права на исполнение лол7 группе  
 
 `find` -  для поиска файлов и каталогов удаления  
