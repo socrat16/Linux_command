@@ -126,6 +126,7 @@ lsof -i TCP:22
 # lsof -i
 всех сетевых подключений
 ```
+```
  lsof -c zabb начало команд с символов
 COMMAND   PID   USER   FD      TYPE             DEVICE SIZE/OFF   NODE NAME
 zabbix_ag 787 zabbix  cwd       DIR              252,2     4096      2 /
@@ -138,7 +139,6 @@ nginx      925        www-data    6u  IPv4  22761      0t0  TCP *:https (LISTEN)
 ```
 
 
-```
 ![Screenshot_1](https://github.com/socrat16/Linux_command/assets/71122445/6c0a10f4-a97a-4e5c-b269-c8b473389507)
 
 
